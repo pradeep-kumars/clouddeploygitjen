@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="604c7bff-334c-4d99-bfc1-1f0302e21ac4" >
+		<http:listener-connection host="0.0.0.0" port="8081" />
+	</http:listener-config>
+	<flow name="clouddeploygitjenFlow" doc:id="12e9fa36-3d8e-475d-b127-2d83236a0ca4" >
+		<http:listener doc:name="Listener" doc:id="652501ca-d806-43c3-96ed-f74476c3ea9f" config-ref="HTTP_Listener_config" path="/cloudtest"/>
+		<ee:transform doc:name="Transform Message" doc:id="b977d397-fc02-42ea-b0dc-c7d299941ec0" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+{
+	"message" : "cloud deployment git and ci/cd jekins"
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<logger level="INFO" doc:name="Logger" doc:id="e6a902e9-379e-4e29-916c-e24ee92adc05" message="end logger"/>
+	</flow>
+</mule>
